@@ -1,0 +1,21 @@
+﻿<select class="locInput countries" data-errormsg="Please select a country" data-warningmsg="">
+    <option value="select">Country</option>
+    @if (ViewBag.Countries != null)
+    {
+        var currentCountry = Model;
+        foreach (var item in ViewBag.Countries)
+        {
+            if (item.Country.Trim().Equals(currentCountry))
+            {
+                <option value="@currentCountry" selected="selected">@currentCountry</option>
+            }
+            else
+            {
+                <option value="@item.Country.Trim()">@item.Country.Trim()</option>
+            }
+
+        }
+    }
+
+</select>
+<span class="infoIcon"></span>

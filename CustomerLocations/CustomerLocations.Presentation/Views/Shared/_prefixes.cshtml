@@ -1,0 +1,21 @@
+﻿<select class="locInput prefixes" data-errormsg="Please select a prefix" data-warningmsg="">
+    <option value="select">Prefix</option>
+    @if (ViewBag.Prefixes != null)
+    {
+        var currentPrefix = Model;
+        foreach (var item in ViewBag.Prefixes)
+        {
+            
+            if (item.Prefix.Trim().Equals(currentPrefix))
+            {
+                <option value="@currentPrefix" selected="selected">@currentPrefix</option>
+            }
+            else
+            {
+                <option value="@item.Prefix.Trim()">@item.Prefix.Trim()</option>
+            }
+        }
+    }
+
+</select>
+<span class="infoIcon"></span>

@@ -1,0 +1,102 @@
+﻿@using System.Globalization
+@model Location
+
+@{
+    var locNum = string.Format("{0}", Model.LocNumber);
+    var locCountry = Model.Country != null ? Model.Country.Trim() : "";
+    var locPrefix = Model.Prefix != null ? Model.Prefix.Trim() : "";
+    var locPhone = Model.Phone != null ? Model.Phone.Trim() : "";
+    var locTimespane = Model.Timespane != null ? Model.Timespane.Trim() : "";
+    var locEnabled = Model.Enabled;
+
+    //distinguesh between a blank record and a record already exist in db
+    //test if the primary key is 0, means this is a new record
+   
+    var newRecord =locNum.Equals("0");
+    var rowClass = newRecord ? "newRecord" : "oldRecord";
+   
+    
+}
+
+
+
+<tr class="@rowClass">
+    <td>
+        @if(newRecord){
+            @Html.TextBox("locNum" + locNum, locNum,
+            new
+            {
+                style = "width:70px",
+                @class = "locInput locNumber",
+                type="number",
+                maxlength = 4,
+                placeholder = "Id",
+                data_errormsg = "Invalid value. Please specify a value between 1 and 9999",
+                data_warningmsg = "This Location Number already exists. Try another one",
+                data_uniqueiderror="Record already exists"
+            })
+        }
+        else
+        {
+            @Html.TextBox("locNum" + locNum, locNum,
+            new
+            {
+                style = "width:70px",
+                @class = "locInput locNumber",
+                type="number",
+                min = 1,
+                max=9999,
+                placeholder = "Id",
+                @readonly="readonly",
+                data_errormsg = "Invalid value. Please specify a value between 1 and 9999",
+                data_warningmsg = "This Location Number already exists. Try another one",
+                data_uniqueiderror="Record already exists"
+            })
+        }
+        
+        <span class="infoIcon"></span>
+    </td>
+    <td>
+        @Html.Partial("_countries", locCountry)
+    </td>
+    <td>
+        @Html.Partial("_prefixes", locPrefix)
+    </td>
+    <td>
+        @Html.TextBox("phoneNo" + locPhone, locPhone, 
+        new
+        {
+            style = "width:120px", 
+            @class = "locInput locPhone",
+            type="number",
+            maxlength=10,
+            min=1000000,
+            max=9999999999,
+            placeholder="Phone Number",
+            data_errormsg = "Invalid value. Value should be 8,9 or 10 digits only",
+            data_warningmsg = "This phone number already exists"
+        })
+        <span class="infoIcon"></span>
+    </td>
+    <td>
+        @Html.Partial("_timespanes", locTimespane)
+    </td>
+    <td>
+        @Html.CheckBox("enabled", locEnabled, new { @class = "locInput locEnabled" })
+    </td>
+    <td>
+        <div style="display: block">
+            <button class="locInput btn btn-primary btnSave" 
+                data-errormsg="There are errors. Please correct them" data-warningmsg="There are pending changes" data-successmsg="Record successfully saved">Save</button>
+            <span class="infoIcon"></span>
+        </div>
+        <div style="display: none" class="loader">
+            <img src="~/Images/ajax-loader.gif" alt="wait..." />
+        </div>
+        <div style="display: none" class="accept">
+            <img src="~/Images/accept1.png" alt="done!" />
+        </div>
+        <div style="display: none" class="failure">
+            <img src="~/Images/icon_error.png" />
+        </div>
+</tr>

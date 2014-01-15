@@ -1,0 +1,53 @@
+﻿@model IPagedList<Location>
+
+@{
+    ViewBag.Title = "Home Page - Customer Service Locations";
+}
+
+<table id="locs">
+    <thead>
+        <tr>
+            <th>Loc No</th>
+            <th>Country</th>
+            <th>Prefix</th>
+            <th>Phone</th>
+            <th>Timespane</th>
+            <th>Enabled</th>
+            <th>Save</th>
+        </tr>
+    </thead>
+    <tbody>
+        <form id="locationsForm" onsubmit="return false">
+            @if (Model != null)
+            {
+                foreach (var location in Model)
+                {
+                @Html.Partial("_rowTemplate", location)
+                }
+            }
+
+@*Always display one row for creating a new location record!*@
+
+            @Html.Partial("_rowTemplate", new Location())
+        </form>
+    </tbody>
+</table>
+
+<div>
+    @Html.PagedListPager(Model,page=>Url.Action("Index",new {page}),
+    PagedListRenderOptions.OnlyShowFivePagesAtATime)
+</div>
+
+@*Create some room to display validation errors if there exists any*@
+
+<div id="infoBox" class="infoBox" tabindex="0">
+    <div class="inn-b">
+        <div class="marker outerMarker"></div>
+        <div class="marker innerMarker"></div>
+        <div>
+            <span class="closeIcon">x</span>
+            <div class="infoMessage"></div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,21 @@
+﻿<select class="locInput timespanes" data-errormsg="Please select a timespane" data-warningmsg="">
+    <option value="select">Timespane</option>
+    @if (ViewBag.Timespanes != null)
+    {
+        var currentTimespan = Model;
+        foreach (var item in ViewBag.Timespanes)
+        {
+            var timespan = item.Timespane.Trim();
+            if (timespan.Equals(currentTimespan))
+            {
+                <option value="@currentTimespan" selected="selected">@currentTimespan</option>
+            }
+            else
+            {
+                <option value="@timespan">@timespan</option>
+            }
+        }
+    }
+
+</select>
+<span class="infoIcon"></span>
